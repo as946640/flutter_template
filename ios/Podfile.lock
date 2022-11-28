@@ -1,0 +1,80 @@
+PODS:
+  - Flutter (1.0.0)
+  - fluttertoast (0.0.2):
+    - Flutter
+    - Toast
+  - janalytics (0.0.1):
+    - Flutter
+    - JAnalytics (= 2.1.2)
+    - JCore (= 2.6.2)
+  - JAnalytics (2.1.2):
+    - JCore (>= 2.0.0)
+  - JCore (2.6.2)
+  - JPush (3.6.1):
+    - JCore (< 3.0.0, >= 2.0.0)
+  - jpush_flutter (0.0.2):
+    - Flutter
+    - JCore (= 2.6.2)
+    - JPush (= 3.6.1)
+  - JVerification (2.7.1):
+    - JCore (< 6.0.0, >= 2.1.6)
+  - jverify (0.0.1):
+    - Flutter
+    - JCore (= 2.6.2)
+    - JVerification (= 2.7.1)
+  - path_provider_ios (0.0.1):
+    - Flutter
+  - Toast (4.0.0)
+  - webview_flutter_wkwebview (0.0.1):
+    - Flutter
+
+DEPENDENCIES:
+  - Flutter (from `Flutter`)
+  - fluttertoast (from `.symlinks/plugins/fluttertoast/ios`)
+  - janalytics (from `.symlinks/plugins/janalytics/ios`)
+  - jpush_flutter (from `.symlinks/plugins/jpush_flutter/ios`)
+  - jverify (from `.symlinks/plugins/jverify/ios`)
+  - path_provider_ios (from `.symlinks/plugins/path_provider_ios/ios`)
+  - webview_flutter_wkwebview (from `.symlinks/plugins/webview_flutter_wkwebview/ios`)
+
+SPEC REPOS:
+  trunk:
+    - JAnalytics
+    - JCore
+    - JPush
+    - JVerification
+    - Toast
+
+EXTERNAL SOURCES:
+  Flutter:
+    :path: Flutter
+  fluttertoast:
+    :path: ".symlinks/plugins/fluttertoast/ios"
+  janalytics:
+    :path: ".symlinks/plugins/janalytics/ios"
+  jpush_flutter:
+    :path: ".symlinks/plugins/jpush_flutter/ios"
+  jverify:
+    :path: ".symlinks/plugins/jverify/ios"
+  path_provider_ios:
+    :path: ".symlinks/plugins/path_provider_ios/ios"
+  webview_flutter_wkwebview:
+    :path: ".symlinks/plugins/webview_flutter_wkwebview/ios"
+
+SPEC CHECKSUMS:
+  Flutter: 50d75fe2f02b26cc09d224853bb45737f8b3214a
+  fluttertoast: 16fbe6039d06a763f3533670197d01fc73459037
+  JAnalytics: 2576145801f3436755d5d8a0db52d1a130557169
+  janalytics: 9b7c8621973ba20deb1ddb7de686932936e5974c
+  JCore: 0cb4fc5892bc97af4f27283875369ead3eaa3067
+  JPush: 507d66d7ea307faba1330666d48e4e92af611659
+  jpush_flutter: e75658a5342e3bfe22d9f3de5dfacd3ef44230c5
+  JVerification: 750dc6b4ce55e53d1095958267cfd2e9eb4398a1
+  jverify: 1245a818edcaf6054c9bd1c776f100344ff9c08e
+  path_provider_ios: 14f3d2fd28c4fdb42f44e0f751d12861c43cee02
+  Toast: 91b396c56ee72a5790816f40d3a94dd357abc196
+  webview_flutter_wkwebview: 005fbd90c888a42c5690919a1527ecc6649e1162
+
+PODFILE CHECKSUM: 8e679eca47255a8ca8067c4c67aab20e64cb974d
+
+COCOAPODS: 1.11.3

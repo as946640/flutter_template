@@ -1,0 +1,150 @@
+// 渠道配置
+/// 获取渠道参数使用,这里设置一下默认值
+def dartEnvironmentVariables = [
+    APP_CHANNEL: 'main',
+    OTHER_VAR: 'other',
+]
+
+
+if (project.hasProperty('dart-defines')) {
+    dartEnvironmentVariables = dartEnvironmentVariables + project.property('dart-defines')
+        .split(',')
+        .collectEntries { entry ->
+            // def pair = URLDecoder.decode(entry).split('=')
+
+            
+            // 2.2版本
+            def pair = new String(entry.decodeBase64(), 'UTF-8').split('=')
+            [(pair.first()): pair.last()]
+        }
+}
+
+
+
+
+
+// key 配置
+def keystoreProperties = new Properties()
+def keystorePropertiesFile = rootProject.file('key.properties')
+if (keystorePropertiesFile.exists()) {
+    keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+}
+
+
+
+def localProperties = new Properties()
+def localPropertiesFile = rootProject.file('local.properties')
+if (localPropertiesFile.exists()) {
+    localPropertiesFile.withReader('UTF-8') { reader ->
+        localProperties.load(reader)
+    }
+}
+
+def flutterRoot = localProperties.getProperty('flutter.sdk')
+if (flutterRoot == null) {
+    throw new GradleException("Flutter SDK not found. Define location with flutter.sdk in the local.properties file.")
+}
+
+def flutterVersionCode = localProperties.getProperty('flutter.versionCode')
+if (flutterVersionCode == null) {
+    flutterVersionCode = '1'
+}
+
+def flutterVersionName = localProperties.getProperty('flutter.versionName')
+if (flutterVersionName == null) {
+    flutterVersionName = '1.0'
+}
+
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
+
+android {
+    compileSdkVersion flutter.compileSdkVersion
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+
+    sourceSets {
+        main.java.srcDirs += 'src/main/kotlin'
+    }
+
+    defaultConfig {
+
+        applicationId "yzbtkj.cn.salessecretary"
+        minSdkVersion 19
+        targetSdkVersion 30
+        versionCode flutterVersionCode.toInteger()
+        versionName flutterVersionName
+        consumerProguardFiles 'proguard-rules.pro'
+
+        ndk {
+            //选择要添加的对应 cpu 类型的 .so 库。
+            abiFilters 'armeabi', 'armeabi-v7a', 'x86', 'x86_64', 'mips', 'mips64', 'arm64-v8a'
+        }
+
+        manifestPlaceholders = [
+                JPUSH_PKGNAME : applicationId,
+                JSHARE_PKGNAME: applicationId,
+                JPUSH_APPKEY : "21dc3d9ef2485350ffb81e26",
+                JPUSH_CHANNEL : "developer-default",
+                TENCENT_APPID: '',
+                FACEBOOK_APPID: ''
+        ]
+
+
+    }
+
+    signingConfigs {
+      release {
+           storeFile file("jshare.jks")
+           keyAlias keystoreProperties['keyAlias']
+           keyPassword keystoreProperties['keyPassword']
+           storeFile file(keystoreProperties['storeFile'])
+           storePassword keystoreProperties['storePassword']
+       }
+    }
+
+    buildTypes {
+        release {
+            // TODO: Add your own signing config for the release build.
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            // Signing with the debug keys for now, so `flutter run --release` works.
+            signingConfig signingConfigs.release
+        }
+    }
+
+    packagingOptions {
+        exclude 'lib/arm64-v8a/libgojni.so'
+        exclude 'lib/x86/libgojni.so'
+        exclude 'lib/x86_64/libgojni.so'
+    }
+
+        // 重命名 apk
+    applicationVariants.all { variant ->
+        variant.outputs.all { output ->
+            if(variant.buildType.name == "release"){
+                // 获取版本
+                def versionName = variant.versionName
+                def versionCode = variant.versionName
+             	// 设置新名称
+                def newApkName ="app_v${defaultConfig.versionName}_${defaultConfig.versionCode}_channel_${dartEnvironmentVariables.APP_CHANNEL}.apk"
+                outputFileName = new File(newApkName)
+            }
+        }
+    }
+}
+
+flutter {
+    source '../..'
+}
+
+dependencies {
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+}
